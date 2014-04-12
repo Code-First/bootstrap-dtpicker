@@ -1,0 +1,166 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1"/>
+	<title>Datepicker</title>
+
+	<link rel="stylesheet" href="assets/bootstrap.min.css"/>
+
+	<!--[if lt IE 9]>
+	  <script src="assets/html5shiv.js"></script>
+	  <script src="assets/respond.min.js"></script>
+	<![endif]-->
+
+	<style type="text/css">
+		body
+		{
+			margin: 40px;
+		}
+
+		.control-container
+		{
+			padding: 10px 15px;
+		}
+	</style>
+</head>
+<body>
+	<div class="container">
+
+		<div id="datepickers" class="row">
+
+			<div class="col-md-3 control-container">
+
+				<p></p>
+
+				<input type="date" class="form-control" />
+
+				<p></p>
+
+			</div>
+
+			<div class="col-md-3 control-container">
+
+				<p></p>
+
+				<input type="datetime" class="form-control" />
+
+				<p></p>
+
+			</div>
+
+			<div class="col-md-3 control-container">
+
+				<p></p>
+
+				<input type="datetime-local" class="form-control" />
+
+				<p></p>
+
+			</div>
+
+			<div class="col-md-3 control-container">
+
+				<p></p>
+
+				<input type="time" class="form-control" />
+
+				<p></p>
+
+			</div>
+
+		</div>
+
+	</div>
+
+	<div class="popover hide bottom in" style="display: none; top: 74px; left: 564px; max-width: 400px;">
+		<div class="arrow"></div>
+		<div class="popover-title">
+			<div class="row">
+				<div class="col-xs-3"><button class="btn btn-default btn-xs btn-block">&laquo;</button></div>
+				<div class="col-xs-6"><button class="btn btn-primary btn-xs btn-block">April 2014</button></div>
+				<div class="col-xs-3"><button class="btn btn-default btn-xs btn-block">&raquo;</button></div>
+			</div>
+		</div>
+		<div class="popover-content" style="padding: 0px;">
+			<table class="table table-bordered table-condensed" style="margin: 0px;">
+				<tbody>
+					<tr>
+						<td><button class="btn btn-link btn-block">31</button></td>
+						<td><button class="btn btn-link btn-block">1</button></td>
+						<td><button class="btn btn-link btn-block">2</button></td>
+						<td><button class="btn btn-link btn-block">3</button></td>
+						<td><button class="btn btn-link btn-block">4</button></td>
+						<td><button class="btn btn-link btn-block">5</button></td>
+						<td><button class="btn btn-link btn-block">6</button></td>
+					</tr>
+					<tr>
+						<td><button class="btn btn-link btn-block">7</button></td>
+						<td><button class="btn btn-link btn-block">8</button></td>
+						<td><button class="btn btn-link btn-block">9</button></td>
+						<td><button class="btn btn-link btn-block">10</button></td>
+						<td><button class="btn btn-link btn-block">11</button></td>
+						<td><button class="btn btn-link btn-block">12</button></td>
+						<td><button class="btn btn-link btn-block">13</button></td>
+					</tr>
+					<tr>
+						<td><button class="btn btn-link btn-block">14</button></td>
+						<td><button class="btn btn-link btn-block">15</button></td>
+						<td><button class="btn btn-link btn-block">16</button></td>
+						<td><button class="btn btn-link btn-block">17</button></td>
+						<td><button class="btn btn-link btn-block">18</button></td>
+						<td><button class="btn btn-link btn-block">19</button></td>
+						<td><button class="btn btn-link btn-block">20</button></td>
+					</tr>
+					<tr>
+						<td><button class="btn btn-link btn-block">21</button></td>
+						<td><button class="btn btn-link btn-block">22</button></td>
+						<td><button class="btn btn-link btn-block">23</button></td>
+						<td><button class="btn btn-link btn-block">24</button></td>
+						<td><button class="btn btn-link btn-block">25</button></td>
+						<td><button class="btn btn-link btn-block">26</button></td>
+						<td><button class="btn btn-link btn-block">27</button></td>
+					</tr>
+					<tr>
+						<td><button class="btn btn-link btn-block">28</button></td>
+						<td><button class="btn btn-link btn-block">29</button></td>
+						<td><button class="btn btn-link btn-block">30</button></td>
+						<td><button class="btn btn-link btn-block">1</button></td>
+						<td><button class="btn btn-link btn-block">2</button></td>
+						<td><button class="btn btn-link btn-block">3</button></td>
+						<td><button class="btn btn-link btn-block">4</button></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+
+	<script type="text/javascript" src="assets/jquery.min.js"></script>
+	<script type="text/javascript" src="assets/bootstrap.min.js"></script>
+	<script type="text/javascript" src="assets/modernizr.js"></script>
+	<script type="text/javascript">
+		$(function () {
+
+			$("#datepickers input").each(function () {
+				var $container = $(this).prev("p");
+				var elementType = $(this).attr("type");
+				var supported = Modernizr.inputtypes[elementType];
+				$container.text(elementType + " - " + (supported ? "supported" : "not supported"));
+			});
+
+			$("#datepickers input").on("change blur keyup click", function () {
+				var $container = $(this).next("p");
+				if (!!this.valueAsDate)
+					$container.text(JSON.stringify(this.valueAsDate));
+				else if ($(this).val().length > 0)
+					$container.text(JSON.stringify($(this).val()));
+				else
+					$container.text("N/A");
+			});
+
+			$("#datepickers input").trigger("change");
+		});
+	</script>
+</body>
+</html>
