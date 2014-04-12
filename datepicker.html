@@ -28,7 +28,20 @@
 		{
 			border: 1px solid gray;
 			background-color: silver;
+			-webkit-appearance: none;
 		}
+
+			input[type='date']::-webkit-datetime-edit {
+				background-color: red;
+			}
+
+			input[type='date']::-webkit-datetime-edit-fields-wrapper {
+				background-color: green;
+			}
+
+			input[type='date']::-webkit-datetime-edit-text {
+				background-color: blue;
+			}
 
 			input[type='date']::-webkit-calendar-picker-indicator, input[type='date']::-webkit-inner-spin-button
 			{
@@ -83,9 +96,14 @@
 
 		</div>
 
+		<div class="row">
+			<div class="col-xs-12">
+				<ul id="events"></ul>
+			</div>
+		</div>
 	</div>
 
-	<div class="popover hide bottom in" style="display: none; top: 74px; left: 564px; max-width: 400px;">
+	<div class="popover bottom in" style="display: block; top: 174px; left: 564px; max-width: 400px;">
 		<div class="arrow"></div>
 		<div class="popover-title">
 			<div class="row">
@@ -168,6 +186,10 @@
 					$container.text(JSON.stringify($(this).val()));
 				else
 					$container.text("N/A");
+			});
+
+			$(".popover button").on("click", function () {
+				$("#events").prepend($("<li/>").text($(this).text()));
 			});
 
 			$("#datepickers input").trigger("change");
