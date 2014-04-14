@@ -1,0 +1,63 @@
+﻿.dtpicker > .input-group > .input-group-btn > .datebutton
+{
+	-webkit-appearance: none;
+	overflow: hidden;
+	color: transparent;
+}
+
+.dtpicker > .input-group > input[readonly]
+{
+	background-color: #fff;
+	cursor: default;
+}
+
+	.dtpicker > .input-group > .input-group-btn > input.datebutton::-webkit-datetime-edit,
+	.dtpicker > .input-group > .input-group-btn > input.datebutton::-webkit-datetime-edit-fields-wrapper,
+	.dtpicker > .input-group > .input-group-btn > input.datebutton::-webkit-datetime-edit-text,
+	.dtpicker > .input-group > .input-group-btn > input.datebutton::-webkit-datetime-edit-month-field,
+	.dtpicker > .input-group > .input-group-btn > input.datebutton::-webkit-datetime-edit-day-field,
+	.dtpicker > .input-group > .input-group-btn > input.datebutton::-webkit-datetime-edit-year-field,
+	.dtpicker > .input-group > .input-group-btn > input.datebutton::-webkit-inner-spin-button,
+	.dtpicker > .input-group > .input-group-btn > input.datebutton::-webkit-calendar-picker-indicator
+	{
+		display: none;
+		background: transparent;
+		color: transparent;
+		visibility: hidden;
+		opacity: 0;
+		-webkit-appearance: none;
+	}
+
+.dtpicker > .input-group > .input-group-btn > .datebutton
+{
+	background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAMAAABEpIrGAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAAzUExURTExMTIyMnZ2digoKCUlJS8vLy0tLXx8fCsrKyYmJiwsLDAwMCoqKikpKS4uLjMzM////0xRuPwAAAARdFJOU/////////////////////8AJa2ZYgAAAINJREFUeNrkk0sKgDAMRBPrP2b0/qfVVouxVkQQNw5MyJTXkC5K043oO6AoC3NqUgS0VgOYROsFV3HluqiQtiEBUAiPLIhak+4AxpzwALh9phtycjvQIqf2zSXBW2fNFpCl9InFAr4fEuMwQTvtEx8m+IrE9L8dGhLIyc3XX+9SswADAB1tOc90ctrVAAAAAElFTkSuQmCC);
+	background-repeat: no-repeat;
+	background-position: center center;
+}
+
+	.dtpicker > .input-group > .input-group-btn > input.datebutton:hover
+	{
+	}
+
+	.dtpicker > .input-group > .input-group-btn > input.datebutton:active
+	{
+	}
+	
+	.dtpicker > .input-group > .input-group-btn > .datebutton
+	{
+		height: 34px;
+		width: 38px;
+	}
+
+	.dtpicker > .input-group.input-group-lg > .input-group-btn > .datebutton
+	{
+		height: 46px;
+		width: 48px;
+	}
+
+	.dtpicker > .input-group.input-group-sm > .input-group-btn > .datebutton
+	{
+		height: 30px;
+		width: 32px;
+		background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABwAAAAcCAMAAABF0y+mAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAAzUExURSoqKjExMTIyMnZ2di8vLygoKCUlJXx8fC0tLSsrKyYmJiwsLDAwMCkpKS4uLjMzM////8UxuDMAAAARdFJOU/////////////////////8AJa2ZYgAAAIRJREFUeNq0UgEOgyAMhKpz6vXc/187bAc1cTFLnJdL78JRCgnpdYJ0NeweXVsK/wn1qS0Mn2zr0Es/zA7z3ryFSsgqoMO91pDrEfwpPH3KxCOm6zMppWRjFYkQpSzGKoiQblIId50666KFTXD7sdvlaayS7545ZhAZ2Mv4l3/7HW8BBgBf3SuTXs8W8QAAAABJRU5ErkJggg==);
+	}

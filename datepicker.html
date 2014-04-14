@@ -1,12 +1,13 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="utf-8"/>
-	<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-	<meta name="viewport" content="width=device-width, initial-scale=1"/>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no" />
 	<title>Datepicker</title>
 
-	<link rel="stylesheet" href="assets/bootstrap.min.css"/>
+	<link rel="stylesheet" href="assets/bootstrap.min.css" />
+	<link rel="stylesheet" href="bootstrap-dtpicker.css" />
 
 	<!--[if lt IE 9]>
 	  <script src="assets/html5shiv.js"></script>
@@ -23,48 +24,51 @@
 		{
 			padding: 10px 15px;
 		}
-
-		input[type='date']
-		{
-			border: 1px solid gray;
-			background-color: silver;
-			-webkit-appearance: none;
-		}
-
-			input[type='date']::-webkit-datetime-edit {
-				background-color: red;
-			}
-
-			input[type='date']::-webkit-datetime-edit-fields-wrapper {
-				background-color: green;
-			}
-
-			input[type='date']::-webkit-datetime-edit-text {
-				background-color: blue;
-			}
-
-			input[type='date']::-webkit-calendar-picker-indicator, input[type='date']::-webkit-inner-spin-button
-			{
-				display: none;
-			}
 	</style>
 </head>
 <body>
 	<div class="container">
 
-		<div id="datepickers" class="row">
+		<div class="row">
+			<!--<h2>Static</h2>
 
-			<div class="col-md-3 control-container">
-
-				<p></p>
-
-				<input type="date" class="form-control" />
-
-				<p></p>
-
+			<div class="col-md-4 control-container">
+				<h3>Large</h3>
+				<div class="dtpicker">
+					<div class="input-group input-group-lg">
+						<input type="text" class="form-control" readonly="readonly" />
+						<span class="input-group-btn">
+							<input type="date" class="btn btn-default btn-lg datebutton" value="" />
+						</span>
+					</div>
+				</div>
 			</div>
 
-			<div class="col-md-3 control-container">
+			<div class="col-md-4 control-container">
+				<h3>Default</h3>
+				<div class="dtpicker">
+					<div class="input-group">
+						<input type="text" class="form-control" readonly="readonly" />
+						<span class="input-group-btn">
+							<input type="date" class="btn btn-default datebutton" value="" />
+						</span>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-md-4 control-container">
+				<h3>Small</h3>
+				<div class="dtpicker">
+					<div class="input-group input-group-sm">
+						<input type="text" class="form-control" readonly="readonly" />
+						<span class="input-group-btn">
+							<input type="date" class="btn btn-default datebutton" value="" />
+						</span>
+					</div>
+				</div>
+			</div>-->
+
+			<!--<div class="col-md-3 control-container">
 
 				<p></p>
 
@@ -92,18 +96,31 @@
 
 				<p></p>
 
-			</div>
-
+			</div>-->
 		</div>
 
 		<div class="row">
-			<div class="col-xs-12">
-				<ul id="events"></ul>
+			<div class="col-md-4 control-container">
+				<h3>Large</h3>
+				<div id="dtpicker1" class="dtpicker-lg">
+				</div>
+			</div>
+
+			<div class="col-md-4 control-container">
+				<h3>Default</h3>
+				<div id="dtpicker2">
+				</div>
+			</div>
+
+			<div class="col-md-4 control-container">
+				<h3>Small</h3>
+				<div id="dtpicker3" class="dtpicker-sm">
+				</div>
 			</div>
 		</div>
 	</div>
 
-	<div class="popover bottom in" style="display: block; top: 0; left: 0; max-width: 400px;">
+	<div class="popover bottom in hide" style="display: block; top: 0; left: 0; max-width: 400px;">
 		<div class="arrow"></div>
 		<div class="popover-title">
 			<div class="row">
@@ -167,32 +184,37 @@
 
 	<script type="text/javascript" src="assets/jquery.min.js"></script>
 	<script type="text/javascript" src="assets/bootstrap.min.js"></script>
+	<script type="text/javascript" src="assets/moment.min.js"></script>
 	<script type="text/javascript" src="assets/modernizr.js"></script>
+	<script type="text/javascript" src="bootstrap-dtpicker.js"></script>
 	<script type="text/javascript">
 		$(function () {
 
-			$("#datepickers input").each(function () {
-				var $container = $(this).prev("p");
-				var elementType = $(this).attr("type");
-				var supported = Modernizr.inputtypes[elementType];
-				$container.text(elementType + " - " + (supported ? "supported" : "not supported"));
-			});
+			//$("input.datebutton").on("change blur keyup click", function () {
+			//	var $container = $(this).parent().parent().find("input[type='text']");
+			//	if (!!this.valueAsDate)
+			//		$container.val(JSON.stringify(this.valueAsDate));
+			//	else if ($(this).val().length > 0)
+			//		$container.val(JSON.stringify($(this).val()));
+			//	else
+			//		$container.val("N/A");
+			//});
 
-			$("#datepickers input").on("change blur keyup click", function () {
-				var $container = $(this).next("p");
-				if (!!this.valueAsDate)
-					$container.text(JSON.stringify(this.valueAsDate));
-				else if ($(this).val().length > 0)
-					$container.text(JSON.stringify($(this).val()));
-				else
-					$container.text("N/A");
-			});
+			//$(".popover button").on("click", function () {
+			//	$("#events").prepend($("<li/>").text($(this).text()));
+			//});
 
-			$(".popover button").on("click", function () {
-				$("#events").prepend($("<li/>").text($(this).text()));
-			});
+			//$("input.datebutton").parent().parent().find("input[type='text']").on("click", function () {
+			//	$(".datebutton").focus();
+			//});
 
-			$("#datepickers input").trigger("change");
+			$("#dtpicker1").dtpicker();
+			$("#dtpicker2").dtpicker();
+			$("#dtpicker3").dtpicker();
+
+			$("#dtpicker1, #dtpicker2, #dtpicker3").on("dateChanged", function (e, date) {
+				console.log(date);
+			});
 		});
 	</script>
 </body>
