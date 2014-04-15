@@ -376,8 +376,13 @@
 			}
 
 			function initEvents() {
-				$datepickerButton.on("change blur keyup click", $.proxy(onDateInputChanged, self));
+				$datepickerButton.on("change blur keyup click", onDateInputChanged);
 				$datepickerInput.on("click", $.proxy(onTextInputClicked, self));
+			}
+
+			function removeEvents() {
+				$datepickerButton.off("change blur keyup click", onDateInputChanged);
+				$datepickerInput.off("click", $.proxy(onTextInputClicked, self));
 			}
 
 			function onDateInputChanged() {
