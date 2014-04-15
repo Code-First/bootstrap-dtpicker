@@ -124,15 +124,16 @@
 				border: none;
 				background: transparent;
 				border-radius: 0;
+				cursor: default;
 			}
-				.dtpicker-popover > .popover-title > .toolbar > div > button.btn-mode:hover
+				/*.dtpicker-popover > .popover-title > .toolbar > div > button.btn-mode:hover
 				{
 					background: #EAEAEA;
 				}
 				.dtpicker-popover > .popover-title > .toolbar > div > button.btn-mode:active
 				{
 					background: #DADADA;
-				}
+				}*/
 
 	.dtpicker-popover > .popover-content
 	{
