@@ -610,10 +610,6 @@
 					$datepickerInput.val(self.format(selectedValue));
 
 				self.notifyDateChanged($root, selectedValue);
-
-				function log(text) {
-					$("body").prepend($("<p></p>").text(JSON.stringify(text)));
-				}
 			}
 
 			function onTextInputClicked() {
@@ -629,6 +625,26 @@
 
 		// Capabilities check
 		var capabilitiesChecker = {
+			_browsers: [
+				function () {
+					// chrome (android)
+					return !!window.chrome && /Chrome\//.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
+				},
+				function () {
+					// safari (ios)
+					return /Safari\//.test(navigator.userAgent) && /Apple Computer/.test(navigator.vendor);
+				},
+			],
+
+			validateBrowser: function () {
+				var result = false;
+				for (var i = 0; i < this._browsers.length; i++) {
+					result |= this._browsers[i]();
+					if (result) break;
+				}
+				return result;
+			},
+
 			validateTouch: function () {
 				var result = false;
 				if (("ontouchstart" in window) || (window.DocumentTouch && document instanceof DocumentTouch))
@@ -650,7 +666,7 @@
 			var control = $(this).data(dataElementName);
 
 			if (control == undefined) {
-				if (capabilitiesChecker.validateTouch() && capabilitiesChecker.validateInputType("date"))
+				if (capabilitiesChecker.validateBrowser() && capabilitiesChecker.validateTouch() && capabilitiesChecker.validateInputType("date"))
 					control = new DatepickerNative($(this), settings);
 				else
 					control = new DatepickerPopover($(this), settings);

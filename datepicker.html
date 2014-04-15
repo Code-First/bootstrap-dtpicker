@@ -27,29 +27,30 @@
 	</style>
 </head>
 <body>
+	<p id="useragent"></p>
 	<div class="container">
 
 		<div class="row">
 			<div class="col-sm-4 control-container">
-				<p></p>
+				<p>-</p>
 				<div id="dtpicker1" class="dtpicker-lg">
 				</div>
 			</div>
 
 			<div class="col-sm-4 control-container">
-				<p></p>
+				<p>-</p>
 				<div id="dtpicker2">
 				</div>
 			</div>
 
 			<div class="col-sm-3 control-container">
-				<p></p>
+				<p>-</p>
 				<div id="dtpicker3" class="dtpicker-sm">
 				</div>
 			</div>
 
 			<div class="col-sm-1 control-container">
-				<p></p>
+				<p>-</p>
 				<div id="dtpicker4" class="dtpicker-sm">
 				</div>
 			</div>
@@ -61,11 +62,11 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-sm-11 control-container">
-				<p></p>
+				<p>-</p>
 				<div id="dtpicker5" class="dtpicker-sm"></div>
 			</div>	
 			<div class="col-sm-1 control-container">
-				<p></p>
+				<p>-</p>
 				<div id="dtpicker6" class="dtpicker-sm"></div>
 			</div>
 		</div>
@@ -163,7 +164,10 @@
 			$("#dtpicker1, #dtpicker2, #dtpicker3, #dtpicker4, #dtpicker5, #dtpicker6").on("dateChanged", function (e, data) {
 				$(this).prev("p").text("Date: " + moment(data).format());
 			});
+
+			$("#useragent").text(navigator.userAgent);
 		});
+
 	</script>
 </body>
 </html>
