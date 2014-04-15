@@ -599,7 +599,7 @@
 			}
 
 			function onDateInputChanged() {
-				selectedValue = this.valueAsDate ? moment.utc(this.valueAsDate).startOf("day") : null;
+				selectedValue = this.valueAsDate ? moment.utc(this.valueAsDate).local().startOf("day") : null;
 
 				if (settings.updateText)
 					$datepickerInput.val(self.format(selectedValue));
