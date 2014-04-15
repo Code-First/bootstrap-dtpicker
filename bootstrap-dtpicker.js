@@ -43,7 +43,6 @@
 				if (m && m.isValid())
 					value = m.startOf("day").toDate();
 
-				//$root.trigger("dateChanged", [date]);
 				$root.trigger("dateChanged", [value]);
 			}
 
@@ -600,7 +599,7 @@
 			}
 
 			function onDateInputChanged() {
-				selectedValue = this.valueAsDate;
+				selectedValue = this.valueAsDate ? moment(this.valueAsDate).startOf("day") : null;
 
 				if (settings.updateText)
 					$datepickerInput.val(self.format(selectedValue));
