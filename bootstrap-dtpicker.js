@@ -617,7 +617,9 @@
 			}
 
 			function onTextInputClicked() {
-				$datepickerButton.focus();
+				setTimeout(function () {
+					$datepickerButton.focus();
+				}, 10);
 			}
 		}
 
