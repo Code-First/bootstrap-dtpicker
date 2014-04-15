@@ -161,7 +161,7 @@
 		$(function () {
 			$("#dtpicker1, #dtpicker2, #dtpicker3, #dtpicker4, #dtpicker5, #dtpicker6").dtpicker();
 			$("#dtpicker1, #dtpicker2, #dtpicker3, #dtpicker4, #dtpicker5, #dtpicker6").on("dateChanged", function (e, data) {
-				$(this).prev("p").text(moment(data).format());
+				$(this).prev("p").text("Date: " + moment(data).format());
 			});
 		});
 	</script>
