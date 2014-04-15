@@ -65,7 +65,10 @@
 			var $root = element;
 			
 			var $datepickerInput, $datepickerButton;
+
 			var $settings = settings;
+
+			var popoverPadding = 10;
 
 			var popover = (function () {
 
@@ -73,48 +76,204 @@
 				var $popoverElement = null;
 
 				popoverContext.build = function () {
-					$popoverElement = $("<div class=\"popover bottom in hide\" style=\"display: block; top: 0; left: 0; max-width: 400px;\"><div class=\"arrow\"></div><div class=\"popover-title\"><div class=\"row\"><div class=\"col-xs-3\"><button class=\"btn btn-default btn-xs btn-block\">&laquo;</button></div>				<div class=\"col-xs-6\"><button class=\"btn btn-primary btn-xs btn-block\">April 2014</button></div><div class=\"col-xs-3\"><button class=\"btn btn-default btn-xs btn-block\">&raquo;</button></div>	</div>		</div>		<div class=\"popover-content\" style=\"padding: 0px;\">			<table class=\"table table-bordered table-condensed\" style=\"margin: 0px;\">				<tbody>					<tr>						<td><button class=\"btn btn-link btn-block\">31</button></td>						<td><button class=\"btn btn-link btn-block\">1</button></td>						<td><button class=\"btn btn-link btn-block\">2</button></td>						<td><button class=\"btn btn-link btn-block\">3</button></td>						<td><button class=\"btn btn-link btn-block\">4</button></td>						<td><button class=\"btn btn-link btn-block\">5</button></td>						<td><button class=\"btn btn-link btn-block\">6</button></td>					</tr>					<tr>						<td><button class=\"btn btn-link btn-block\">7</button></td>						<td><button class=\"btn btn-link btn-block\">8</button></td>						<td><button class=\"btn btn-link btn-block\">9</button></td>						<td><button class=\"btn btn-link btn-block\">10</button></td>						<td><button class=\"btn btn-link btn-block\">11</button></td>						<td><button class=\"btn btn-link btn-block\">12</button></td>						<td><button class=\"btn btn-link btn-block\">13</button></td>					</tr>					<tr>						<td><button class=\"btn btn-link btn-block\">14</button></td>						<td><button class=\"btn btn-link btn-block\">15</button></td>						<td><button class=\"btn btn-link btn-block\">16</button></td>						<td><button class=\"btn btn-link btn-block\">17</button></td>						<td><button class=\"btn btn-link btn-block\">18</button></td>						<td><button class=\"btn btn-link btn-block\">19</button></td>						<td><button class=\"btn btn-link btn-block\">20</button></td>					</tr>					<tr>						<td><button class=\"btn btn-link btn-block\">21</button></td>						<td><button class=\"btn btn-link btn-block\">22</button></td><td><button class=\"btn btn-link btn-block\">23</button></td>						<td><button class=\"btn btn-link btn-block\">24</button></td>						<td><button class=\"btn btn-link btn-block\">25</button></td>						<td><button class=\"btn btn-link btn-block\">26</button></td>						<td><button class=\"btn btn-link btn-block\">27</button></td>					</tr>					<tr>						<td><button class=\"btn btn-link btn-block\">28</button></td>						<td><button class=\"btn btn-link btn-block\">29</button></td>						<td><button class=\"btn btn-link btn-block\">30</button></td>						<td><button class=\"btn btn-link btn-block\">1</button></td>						<td><button class=\"btn btn-link btn-block\">2</button></td>						<td><button class=\"btn btn-link btn-block\">3</button></td>						<td><button class=\"btn btn-link btn-block\">4</button></td>					</tr>				</tbody>			</table>		</div>	</div>					");
+					$popoverElement = $("<div class=\"popover in hide dtpicker-popover\" style=\"display: block; top: 0; left: 0; max-width: 400px;\"><div class=\"arrow\"></div><div class=\"popover-title\"><div class=\"row\"><div class=\"col-xs-3\"><button class=\"btn btn-default btn-xs btn-block\">&laquo;</button></div>				<div class=\"col-xs-6\"><button class=\"btn btn-primary btn-xs btn-block\">April 2014</button></div><div class=\"col-xs-3\"><button class=\"btn btn-default btn-xs btn-block\">&raquo;</button></div>	</div>		</div>		<div class=\"popover-content\" style=\"padding: 0px;\">			<table class=\"table table-bordered table-condensed\" style=\"margin: 0px;\">				<tbody>					<tr>						<td><button class=\"btn btn-link btn-block\">31</button></td>						<td><button class=\"btn btn-link btn-block\">1</button></td>						<td><button class=\"btn btn-link btn-block\">2</button></td>						<td><button class=\"btn btn-link btn-block\">3</button></td>						<td><button class=\"btn btn-link btn-block\">4</button></td>						<td><button class=\"btn btn-link btn-block\">5</button></td>						<td><button class=\"btn btn-link btn-block\">6</button></td>					</tr>					<tr>						<td><button class=\"btn btn-link btn-block\">7</button></td>						<td><button class=\"btn btn-link btn-block\">8</button></td>						<td><button class=\"btn btn-link btn-block\">9</button></td>						<td><button class=\"btn btn-link btn-block\">10</button></td>						<td><button class=\"btn btn-link btn-block\">11</button></td>						<td><button class=\"btn btn-link btn-block\">12</button></td>						<td><button class=\"btn btn-link btn-block\">13</button></td>					</tr>					<tr>						<td><button class=\"btn btn-link btn-block\">14</button></td>						<td><button class=\"btn btn-link btn-block\">15</button></td>						<td><button class=\"btn btn-link btn-block\">16</button></td>						<td><button class=\"btn btn-link btn-block\">17</button></td>						<td><button class=\"btn btn-link btn-block\">18</button></td>						<td><button class=\"btn btn-link btn-block\">19</button></td>						<td><button class=\"btn btn-link btn-block\">20</button></td>					</tr>					<tr>						<td><button class=\"btn btn-link btn-block\">21</button></td>						<td><button class=\"btn btn-link btn-block\">22</button></td><td><button class=\"btn btn-link btn-block\">23</button></td>						<td><button class=\"btn btn-link btn-block\">24</button></td>						<td><button class=\"btn btn-link btn-block\">25</button></td>						<td><button class=\"btn btn-link btn-block\">26</button></td>						<td><button class=\"btn btn-link btn-block\">27</button></td>					</tr>					<tr>						<td><button class=\"btn btn-link btn-block\">28</button></td>						<td><button class=\"btn btn-link btn-block\">29</button></td>						<td><button class=\"btn btn-link btn-block\">30</button></td>						<td><button class=\"btn btn-link btn-block\">1</button></td>						<td><button class=\"btn btn-link btn-block\">2</button></td>						<td><button class=\"btn btn-link btn-block\">3</button></td>						<td><button class=\"btn btn-link btn-block\">4</button></td>					</tr>				</tbody>			</table>		</div>	</div>					");
 					$("body").append($popoverElement);
 				};
 
-				popoverContext.place = function (inputElement) {
+				popoverContext.place = function () {
 					if ($popoverElement) {
+						var inputElement = $datepickerInput;
 						var coords = inputElement.offset();
 
-						$popoverElement.offset({
-							top: coords.top + inputElement.outerHeight() + 1,
-							left: coords.left
+
+						var placement = getPopoverPlacement($settings.placement, inputElement, $popoverElement);
+						var offset = getPopoverOffset(placement, inputElement, $datepickerButton, $popoverElement);
+
+						$popoverElement.removeClass("top bottom right left");
+
+						if ($settings.displayArrow)
+							$popoverElement.addClass(placement);
+
+						$popoverElement.css({
+							top: offset.top,
+							left: offset.left
 						});
+
+						console.log(offset);
 					}
 				};
 
-				popoverContext.show = function (inputElement) {
+				popoverContext.toggle = function () {
+					if ($popoverElement && $popoverElement.is(":visible"))
+						popoverContext.hide();
+					else
+						popoverContext.show();
+				};
+
+				popoverContext.show = function (avoidInputFocus) {
 					if (!$popoverElement)
 						popoverContext.build();
 
-					popoverContext.place(inputElement);
-					$popoverElement.removeClass("hide").show();
+					var inputElement = $datepickerInput;
 
-					$popoverElement.on("blur", function () {
-						console.log("BLUR");
-					});
+					$popoverElement.removeClass("hide").show();
+					popoverContext.place();
+
+					$(document).on("mousedown", $.proxy(onInputBlur, popoverContext));
+					$(window).on("resize", $.proxy(popoverContext.place, popoverContext));
+					$datepickerInput.on("keydown", $.proxy(onKeyDown, popoverContext));
+
+					if (!avoidInputFocus)
+						$datepickerInput.focus();
 				};
 
 				popoverContext.hide = function () {
 					if ($popoverElement) {
+
+						$(document).off("mousedown", $.proxy(onInputBlur, popoverContext));
+						$(window).off("resize", $.proxy(popoverContext.place, popoverContext));
+						$datepickerInput.off("keydown", $.proxy(onKeyDown, popoverContext));
+
 						$popoverElement.remove();
 						$popoverElement = null;
 					}
 				};
 
-				popoverContext.toggle = function (inputElement) {
-					if ($popoverElement && $popoverElement.is(":visible"))
-						popoverContext.hide();
-					else
-						popoverContext.show(inputElement);
-				};
-
 				return popoverContext;
+
+				function getPopoverPlacement(mode, $inputElement, $popoverElement) {
+					switch (mode) {
+						case "auto":
+							{
+								var popoverHeight = $popoverElement.outerHeight(),
+									windowHeight = $(window).height(),
+									inputTop = $inputElement.offset().top,
+									inputHeight = $inputElement.outerHeight();
+
+								if ((inputTop + inputHeight + 1 + popoverHeight + popoverPadding) < windowHeight)
+									return "bottom";
+								else if (inputTop > (inputHeight + 1 + popoverHeight + popoverPadding))
+									return "top";
+								else
+									return "bottom";
+							}
+						case "left":
+						case "right":
+						case "top":
+						case "bottom":
+							return mode;
+						default:
+							throw "\"" + mode + "\" placement mode is incorrect.";
+					}
+				}
+
+				function getPopoverOffset(placement, $inputElement, $buttonElement, $popoverElement) {
+					var popoverWidth = $popoverElement.outerWidth(),
+									popoverHeight = $popoverElement.outerHeight(),
+									windowWidth = $(window).width(),
+									windowHeight = $(window).height(),
+									inputTop = $inputElement.offset().top,
+									inputLeft = $inputElement.offset().left,
+									inputHeight = $inputElement.outerHeight(),
+									inputWidth = $inputElement.outerWidth(),
+									buttonWidth = $buttonElement.outerWidth(),
+									scrollTop = $(window).scrollTop(),
+									canvasHeight = windowHeight + scrollTop;
+
+					var result = {
+						left: 0,
+						top: 0
+					};
+
+					switch (placement) {
+						case "bottom":
+							result.top = inputTop + inputHeight + 1;
+
+							if ((inputLeft + popoverWidth + popoverPadding) > windowWidth)
+							{
+								result.left = windowWidth - (popoverWidth + popoverPadding);
+
+								if (result.left < popoverPadding)
+									result.left = popoverPadding;
+							}
+							else
+								result.left = inputLeft;
+
+							break;
+						case "top":
+							result.top = inputTop - popoverHeight - 1;
+
+							if ((inputLeft + popoverWidth + popoverPadding) > windowWidth) {
+								result.left = windowWidth - (popoverWidth + popoverPadding);
+
+								if (result.left < popoverPadding)
+									result.left = popoverPadding;
+							}
+							else
+								result.left = inputLeft;
+
+							break;
+						case "left":
+							result.top = inputTop - popoverHeight / 2 + inputHeight / 2;
+
+							if ((result.top + popoverHeight) > canvasHeight)
+								result.top = canvasHeight - popoverHeight - 1;
+
+							if (result.top < popoverPadding)
+								result.top = popoverPadding;
+
+							result.left = inputLeft - popoverWidth - 1;
+
+							if (result.left < popoverPadding)
+								result.left = popoverPadding;
+
+							break;
+						case "right":
+							result.top = inputTop - popoverHeight / 2 + inputHeight / 2;
+
+							if ((result.top + popoverHeight) > canvasHeight)
+								result.top = canvasHeight - popoverHeight - 1;
+
+							if (result.top < popoverPadding)
+								result.top = popoverPadding;
+
+							result.left = inputLeft + inputWidth + buttonWidth + 1;
+
+							console.log((result.left + popoverWidth + popoverPadding) > windowWidth);
+
+							if ((result.left + popoverWidth + popoverPadding) > windowWidth)
+								result.left = windowWidth - popoverWidth - popoverPadding;
+
+							break;
+						default:
+							throw "\"" + placement + "\" placement mode is incorrect.";
+					}
+
+					return result;
+				}
+
+				function onInputBlur(e) {
+					var popoverLeft = $(e.target).closest($popoverElement).length == 0;
+					var inputLeft = $(e.target).closest($root).length == 0;
+
+					if (popoverLeft && inputLeft)
+						popoverContext.hide();
+				}
+
+				function onKeyDown(e) {
+					switch (e.keyCode) {
+						case 9: // tab
+							popoverContext.hide();
+							break;
+						case 27: // esc
+							if ($settings.closeOnEsc) {
+								popoverContext.hide();
+								$datepickerInput.blur();
+							}
+							break;
+					}
+				}
+
 			})();
 
 			init();
@@ -126,6 +285,10 @@
 			function init() {
 				initLayout();
 				initEvents();
+			}
+
+			function destroy() {
+				removeEvents();
 			}
 
 			function initLayout() {
@@ -150,19 +313,21 @@
 			}
 
 			function initEvents() {
-				$datepickerInput.on("click", onDatepickerInputClick);
-				$datepickerButton.on("click", onDatepickerButtonClick);
-				$datepickerInput.on("blur", function () {
-					console.log("BLUR");
-				});
+				$datepickerInput.on("focusin", $.proxy(onDatepickerInputClick, self));
+				$datepickerButton.on("click", $.proxy(onDatepickerButtonClick, self));
+			}
+
+			function removeEvents() {
+				$datepickerInput.off("focusin", $.proxy(onDatepickerInputClick, self));
+				$datepickerButton.off("click", $.proxy(onDatepickerButtonClick, self));
 			}
 
 			function onDatepickerInputClick() {
-				$datepickerButton.trigger("click");
+				popover.show(true);
 			}
 
 			function onDatepickerButtonClick() {
-				popover.toggle($datepickerInput);
+				popover.toggle();
 			}
 		}
 
@@ -211,8 +376,8 @@
 			}
 
 			function initEvents() {
-				$datepickerButton.on("change blur keyup click", onDateInputChanged);
-				$datepickerInput.on("click", onTextInputClicked);
+				$datepickerButton.on("change blur keyup click", $.proxy(onDateInputChanged, self));
+				$datepickerInput.on("click", $.proxy(onTextInputClicked, self));
 			}
 
 			function onDateInputChanged() {
@@ -254,7 +419,6 @@
 			var control = $(this).data(dataElementName);
 
 			if (control == undefined) {
-
 				if (capabilitiesChecker.validateTouch() && capabilitiesChecker.validateInputType("date"))
 					control = new DatepickerNative($(this), settings);
 				else
@@ -279,7 +443,10 @@
 		placeholder: "",
 		emptyText: "",
 		format: "DD/MM/YYYY",
-		updateText: true
+		updateText: true,
+		closeOnEsc: true,
+		placement: "auto",
+		displayArrow: true
 	};
 
 	// Memoization API
@@ -309,5 +476,3 @@
 	});
 
 }));
-
-

@@ -100,27 +100,42 @@
 		</div>
 
 		<div class="row">
-			<div class="col-md-4 control-container">
-				<h3>Large</h3>
+			<div class="col-sm-4 control-container">
 				<div id="dtpicker1" class="dtpicker-lg">
 				</div>
 			</div>
 
-			<div class="col-md-4 control-container">
-				<h3>Default</h3>
+			<div class="col-sm-4 control-container">
 				<div id="dtpicker2">
 				</div>
 			</div>
 
-			<div class="col-md-4 control-container">
-				<h3>Small</h3>
+			<div class="col-sm-3 control-container">
 				<div id="dtpicker3" class="dtpicker-sm">
+				</div>
+			</div>
+
+			<div class="col-sm-1 control-container">
+				<div id="dtpicker4" class="dtpicker-sm">
 				</div>
 			</div>
 		</div>
 	</div>
 
-	<div class="popover bottom in hide" style="display: block; top: 0; left: 0; max-width: 400px;">
+	<br/><br /><br /><br /><br /><br /><br /><br /><br /><br />
+
+	<div class="container">
+		<div class="row">
+			<div class="col-sm-11 control-container">
+				<div id="dtpicker5" class="dtpicker-sm"></div>
+			</div>
+			<div class="col-sm-1 control-container">
+				<div id="dtpicker6" class="dtpicker-sm"></div>
+			</div>
+		</div>
+	</div>
+
+	<!--<div class="popover bottom in hide" style="display: block; top: 0; left: 0; max-width: 400px;">
 		<div class="arrow"></div>
 		<div class="popover-title">
 			<div class="row">
@@ -180,7 +195,7 @@
 				</tbody>
 			</table>
 		</div>
-	</div>
+	</div>-->
 
 	<script type="text/javascript" src="assets/jquery.min.js"></script>
 	<script type="text/javascript" src="assets/bootstrap.min.js"></script>
@@ -211,10 +226,13 @@
 			$("#dtpicker1").dtpicker();
 			$("#dtpicker2").dtpicker();
 			$("#dtpicker3").dtpicker();
+			$("#dtpicker4").dtpicker();
+			$("#dtpicker5").dtpicker();
+			$("#dtpicker6").dtpicker();
 
-			$("#dtpicker1, #dtpicker2, #dtpicker3").on("dateChanged", function (e, date) {
-				console.log(date);
-			});
+			//$("#dtpicker1, #dtpicker2, #dtpicker3, #dtpicker4").on("dateChanged", function (e, date) {
+			//	console.log(date);
+			//});
 		});
 	</script>
 </body>
