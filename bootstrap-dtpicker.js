@@ -26,11 +26,13 @@
 		var dataElementName = "jquery-datepicker";
 
 		var options = {};
+
 		if (typeof param == "object")
 			options = param;
 
-		var settings = $.extend($.fn.dtpicker.defaults, options);
+		var settings = $.extend({}, $.fn.dtpicker.defaults, options);
 
+		// Datepicker base
 		function DatepickerBase() {
 			var self = this;
 
@@ -58,6 +60,7 @@
 			}
 		}
 
+		// Datepicker popover
 		function DatepickerPopover(element, settings) {
 
 			var self = this;
@@ -65,6 +68,10 @@
 			var $root = element;
 			
 			var $datepickerInput, $datepickerButton;
+
+			var viewValue = moment().toDate();
+
+			var selectedValue = null;
 
 			var $settings = settings;
 
@@ -75,8 +82,216 @@
 				var popoverContext = { };
 				var $popoverElement = null;
 
+				var layout = {
+
+					_daysCalendarBody: null,
+
+					_daysCalendarTitle: null,
+
+					invalidate: function () {
+						this.invalidateTitle();
+						this.invalidateContent();
+					},
+
+					invalidateTitle: function () {
+						this._daysCalendarTitle.text(moment(viewValue).format($settings.daysTitleFormat));
+					},
+
+					invalidateContent: function () {
+						this._daysCalendarBody
+							.empty()
+							.append(this.buildDaysTableContent(viewValue, $settings.startDay, $settings.displayToday));
+					},
+
+					changeDate: function (value) {
+						viewValue = value ? value : moment().startOf("day").toDate();
+						selectedValue = value;
+
+						if ($settings.updateText)
+							$datepickerInput.val(self.format(selectedValue));
+
+						this.invalidate();
+
+						self.notifyDateChanged($root, selectedValue);
+					},
+
+					buildPopover: function () {
+						var $result = $("<div class=\"popover in hide dtpicker-popover\" style=\"display: none;\"><div class=\"arrow\"></div></div>");
+						
+						$result.append(this.buildPopoverTitle());
+						$result.append(this.buildPopoverContent());
+
+						return $result;
+					},
+
+					buildPopoverTitle: function () {
+						var $result = $("<div class=\"popover-title\"></div>");
+
+						var toolbar = $("<div class=\"toolbar\"></div>");
+
+						var btnPrev = $("<button class=\"btn-prev\">&laquo;</button>");
+						var btnMode = this._daysCalendarTitle = $("<button class=\"btn-mode\">" + moment(viewValue).format($settings.daysTitleFormat) + "</button>");
+						var btnNext = $("<button class=\"btn-next\">&raquo;</button>");
+
+						toolbar.append($("<div class=\"col-xs-2\"></div>").append(btnPrev));
+						toolbar.append($("<div class=\"col-xs-8\"></div>").append(btnMode));
+						toolbar.append($("<div class=\"col-xs-2\"></div>").append(btnNext));
+
+						$result.append(toolbar);
+
+						btnPrev.on("click", $.proxy(function () {
+							viewValue = moment(viewValue).add("M", -1).toDate();
+							this.invalidate();
+						}, this));
+
+						btnNext.on("click", $.proxy(function () {
+							viewValue = moment(viewValue).add("M", 1).toDate();
+							this.invalidate();
+						}, this));
+
+						return $result;
+					},
+
+					buildPopoverContent: function () {
+						var $result = $("<div class=\"popover-content\"></div>");
+
+						$result.append(this.buildDaysTable());
+
+						return $result;
+					},
+
+					buildDaysTable: function () {
+						var $result = $("<table class=\"days\"></table>");
+
+						$result.append(buildHeader($settings.startDay));
+
+						$result.append(this._daysCalendarBody = $("<tbody></tbody>").append(this.buildDaysTableContent(viewValue, $settings.startDay, $settings.displayToday)));
+
+						var footer = buildFooter.call(this, $settings.todayButtonVisible, $settings.clearButtonVisible);
+						if (footer)
+							$result.append(footer);
+
+						return $result;
+
+						function buildHeader(startDay) {
+							return $("<thead></thead>").append($("<tr></tr>").append(buildWeekdays(startDay)))
+						}
+
+						function buildWeekdays(startDay) {
+							if (startDay > 6)
+								throw "Start day can't be more than 6.";
+
+							var result = [];
+
+							var date = moment().day(startDay);
+							for (var i = 0; i < 7; i++) {
+								var $day = $("<th></th>").text(date.format("ddd"));
+								result.push($day);
+								date.add("day", 1);
+							}
+
+							return result;
+						}
+
+						function buildFooter(todayButtonVisible, clearButtonVisible) {
+							var btnToday = null,
+								btnClear = null;
+
+							if (todayButtonVisible) {
+								btnToday = $("<button class=\"btn-today\">Today</button>");
+								btnToday.on("click", $.proxy(function () {
+									this.changeDate(moment().startOf("day").toDate());
+								}, this));
+							}
+
+							if (clearButtonVisible) {
+								btnClear = $("<button class=\"btn-clear\">Clear</button>");
+								btnClear.on("click", $.proxy(function () {
+									this.changeDate(null);
+								}, this));
+							}
+
+							var container = $("<td colspan=\"7\"></td>");
+
+							if (btnToday && btnClear) {
+								container.append($("<div class=\"col-xs-6\"></div>").append(btnToday));
+								container.append($("<div class=\"col-xs-6\"></div>").append(btnClear));
+							}
+							else if (btnToday)
+								container.append(btnToday);
+							else if (btnClear)
+								container.append(btnClear);
+
+							if (btnToday || btnClear) {
+								return $("<tfoot></tfoot>")
+									.append($("<tr></tr>")
+										.append(container));
+							}
+							else
+								return null;
+
+						}
+					},
+
+					buildDaysTableContent: function (date, startDay, displayToday) {
+						if (startDay > 6)
+							throw "Start day can't be more than 6.";
+
+						var day = moment(date).startOf("month");
+						while (day.day() != startDay)
+							day.add("d", -1);
+
+						var today = moment();
+						var selectedDate = moment(selectedValue);
+						var currentDate = moment(date);
+						var currentMonth = currentDate.month();
+						var daysInMonth = currentDate.daysInMonth();
+						var weeksCount = Math.ceil((moment(date).endOf("month").diff(day, "days") + 1) / 7);
+
+						var weeks = [];
+
+						for (var weekNo = 0; weekNo < weeksCount; weekNo++) {
+							var days = [];
+
+							for (var dayNo = 0; dayNo < 7; dayNo++) {
+								var isPrevMonth = (currentMonth != day.month()) && currentDate.isAfter(day);
+								var isNextMonth = (currentMonth != day.month()) && currentDate.isBefore(day);
+
+								var dayButton = $("<button class=\"btn-date\"></button>")
+									.text(day.format("D"))
+									.attr("data-dtvalue", day.toISOString());
+
+								if (isPrevMonth)
+									dayButton.addClass("prev");
+
+								if (isNextMonth)
+									dayButton.addClass("next");
+
+								if (displayToday && today.isSame(day, "day"))
+									dayButton.addClass("today");
+
+								if (selectedDate && selectedDate.isSame(day, "day"))
+									dayButton.addClass("selected");
+
+								dayButton.on("click", { layout: this }, function (e) {
+									var m = moment($(this).attr("data-dtvalue"));
+									e.data.layout.changeDate(m.isValid() ? m.toDate() : null);
+								});
+
+								days.push($("<td></td>").append(dayButton));
+								day.add("d", 1);
+							}
+
+							weeks.push($("<tr></tr>").append(days));
+						}
+
+						return weeks;
+					}
+
+				};
+
 				popoverContext.build = function () {
-					$popoverElement = $("<div class=\"popover in hide dtpicker-popover\" style=\"display: block; top: 0; left: 0; max-width: 400px;\"><div class=\"arrow\"></div><div class=\"popover-title\"><div class=\"row\"><div class=\"col-xs-3\"><button class=\"btn btn-default btn-xs btn-block\">&laquo;</button></div>				<div class=\"col-xs-6\"><button class=\"btn btn-primary btn-xs btn-block\">April 2014</button></div><div class=\"col-xs-3\"><button class=\"btn btn-default btn-xs btn-block\">&raquo;</button></div>	</div>		</div>		<div class=\"popover-content\" style=\"padding: 0px;\">			<table class=\"table table-bordered table-condensed\" style=\"margin: 0px;\">				<tbody>					<tr>						<td><button class=\"btn btn-link btn-block\">31</button></td>						<td><button class=\"btn btn-link btn-block\">1</button></td>						<td><button class=\"btn btn-link btn-block\">2</button></td>						<td><button class=\"btn btn-link btn-block\">3</button></td>						<td><button class=\"btn btn-link btn-block\">4</button></td>						<td><button class=\"btn btn-link btn-block\">5</button></td>						<td><button class=\"btn btn-link btn-block\">6</button></td>					</tr>					<tr>						<td><button class=\"btn btn-link btn-block\">7</button></td>						<td><button class=\"btn btn-link btn-block\">8</button></td>						<td><button class=\"btn btn-link btn-block\">9</button></td>						<td><button class=\"btn btn-link btn-block\">10</button></td>						<td><button class=\"btn btn-link btn-block\">11</button></td>						<td><button class=\"btn btn-link btn-block\">12</button></td>						<td><button class=\"btn btn-link btn-block\">13</button></td>					</tr>					<tr>						<td><button class=\"btn btn-link btn-block\">14</button></td>						<td><button class=\"btn btn-link btn-block\">15</button></td>						<td><button class=\"btn btn-link btn-block\">16</button></td>						<td><button class=\"btn btn-link btn-block\">17</button></td>						<td><button class=\"btn btn-link btn-block\">18</button></td>						<td><button class=\"btn btn-link btn-block\">19</button></td>						<td><button class=\"btn btn-link btn-block\">20</button></td>					</tr>					<tr>						<td><button class=\"btn btn-link btn-block\">21</button></td>						<td><button class=\"btn btn-link btn-block\">22</button></td><td><button class=\"btn btn-link btn-block\">23</button></td>						<td><button class=\"btn btn-link btn-block\">24</button></td>						<td><button class=\"btn btn-link btn-block\">25</button></td>						<td><button class=\"btn btn-link btn-block\">26</button></td>						<td><button class=\"btn btn-link btn-block\">27</button></td>					</tr>					<tr>						<td><button class=\"btn btn-link btn-block\">28</button></td>						<td><button class=\"btn btn-link btn-block\">29</button></td>						<td><button class=\"btn btn-link btn-block\">30</button></td>						<td><button class=\"btn btn-link btn-block\">1</button></td>						<td><button class=\"btn btn-link btn-block\">2</button></td>						<td><button class=\"btn btn-link btn-block\">3</button></td>						<td><button class=\"btn btn-link btn-block\">4</button></td>					</tr>				</tbody>			</table>		</div>	</div>					");
+					$popoverElement = layout.buildPopover();
 					$("body").append($popoverElement);
 				};
 
@@ -84,7 +299,6 @@
 					if ($popoverElement) {
 						var inputElement = $datepickerInput;
 						var coords = inputElement.offset();
-
 
 						var placement = getPopoverPlacement($settings.placement, inputElement, $popoverElement);
 						var offset = getPopoverOffset(placement, inputElement, $datepickerButton, $popoverElement);
@@ -98,8 +312,6 @@
 							top: offset.top,
 							left: offset.left
 						});
-
-						console.log(offset);
 					}
 				};
 
@@ -331,6 +543,7 @@
 			}
 		}
 
+		// Datepicker native
 		function DatepickerNative(element, settings) {
 
 			var self = this;
@@ -339,7 +552,7 @@
 			var $datepickerInput, $datepickerButton;
 			var $settings = settings;
 
-			var currentValue = null;
+			var selectedValue = null;
 
 			init();
 
@@ -386,12 +599,12 @@
 			}
 
 			function onDateInputChanged() {
-				currentValue = this.valueAsDate;
+				selectedValue = this.valueAsDate;
 
 				if (settings.updateText)
-					$datepickerInput.val(self.format(currentValue));
+					$datepickerInput.val(self.format(selectedValue));
 
-				self.notifyDateChanged($root, currentValue);
+				self.notifyDateChanged($root, selectedValue);
 			}
 
 			function onTextInputClicked() {
@@ -403,6 +616,7 @@
 
 		DatepickerNative.prototype = new DatepickerBase();
 
+		// Capabilities check
 		var capabilitiesChecker = {
 			validateTouch: function () {
 				var result = false;
@@ -421,6 +635,7 @@
 		// Apply control to each jQuery element
 		var params = arguments;
 		return this.each(function () {
+
 			var control = $(this).data(dataElementName);
 
 			if (control == undefined) {
@@ -451,7 +666,12 @@
 		updateText: true,
 		closeOnEsc: true,
 		placement: "auto",
-		displayArrow: true
+		displayArrow: true,
+		startDay: 1,
+		todayButtonVisible: true,
+		clearButtonVisible: true,
+		daysTitleFormat: "MMMM YYYY",
+		displayToday: true
 	};
 
 	// Memoization API

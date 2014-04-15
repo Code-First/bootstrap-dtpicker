@@ -30,76 +30,6 @@
 	<div class="container">
 
 		<div class="row">
-			<!--<h2>Static</h2>
-
-			<div class="col-md-4 control-container">
-				<h3>Large</h3>
-				<div class="dtpicker">
-					<div class="input-group input-group-lg">
-						<input type="text" class="form-control" readonly="readonly" />
-						<span class="input-group-btn">
-							<input type="date" class="btn btn-default btn-lg datebutton" value="" />
-						</span>
-					</div>
-				</div>
-			</div>
-
-			<div class="col-md-4 control-container">
-				<h3>Default</h3>
-				<div class="dtpicker">
-					<div class="input-group">
-						<input type="text" class="form-control" readonly="readonly" />
-						<span class="input-group-btn">
-							<input type="date" class="btn btn-default datebutton" value="" />
-						</span>
-					</div>
-				</div>
-			</div>
-
-			<div class="col-md-4 control-container">
-				<h3>Small</h3>
-				<div class="dtpicker">
-					<div class="input-group input-group-sm">
-						<input type="text" class="form-control" readonly="readonly" />
-						<span class="input-group-btn">
-							<input type="date" class="btn btn-default datebutton" value="" />
-						</span>
-					</div>
-				</div>
-			</div>-->
-
-			<!--<div class="col-md-3 control-container">
-
-				<p></p>
-
-				<input type="datetime" class="form-control" />
-
-				<p></p>
-
-			</div>
-
-			<div class="col-md-3 control-container">
-
-				<p></p>
-
-				<input type="datetime-local" class="form-control" />
-
-				<p></p>
-
-			</div>
-
-			<div class="col-md-3 control-container">
-
-				<p></p>
-
-				<input type="time" class="form-control" />
-
-				<p></p>
-
-			</div>-->
-		</div>
-
-		<div class="row">
 			<div class="col-sm-4 control-container">
 				<div id="dtpicker1" class="dtpicker-lg">
 				</div>
@@ -128,71 +58,90 @@
 		<div class="row">
 			<div class="col-sm-11 control-container">
 				<div id="dtpicker5" class="dtpicker-sm"></div>
-			</div>
+			</div>	
 			<div class="col-sm-1 control-container">
 				<div id="dtpicker6" class="dtpicker-sm"></div>
 			</div>
 		</div>
 	</div>
 
-	<!--<div class="popover bottom in hide" style="display: block; top: 0; left: 0; max-width: 400px;">
+	<!--<div class="popover dtpicker-popover bottom in" style="display: block; top: 100px; left: 100px;">
 		<div class="arrow"></div>
 		<div class="popover-title">
-			<div class="row">
-				<div class="col-xs-3"><button class="btn btn-default btn-xs btn-block">&laquo;</button></div>
-				<div class="col-xs-6"><button class="btn btn-primary btn-xs btn-block">April 2014</button></div>
-				<div class="col-xs-3"><button class="btn btn-default btn-xs btn-block">&raquo;</button></div>
+			<div class="toolbar">
+				<div class="col-xs-2"><button class="btn-prev">&laquo;</button></div>
+				<div class="col-xs-8"><button class="btn-mode">April 2014</button></div>
+				<div class="col-xs-2"><button class="btn-next">&raquo;</button></div>
 			</div>
 		</div>
-		<div class="popover-content" style="padding: 0px;">
-			<table class="table table-bordered table-condensed" style="margin: 0px;">
+		<div class="popover-content">
+			<table class="days">
+				<thead>
+					<tr>
+						<th class="weekday">Mon</th>
+						<th class="weekday">Tue</th>
+						<th class="weekday">Wed</th>
+						<th class="weekday">Thu</th>
+						<th class="weekday">Fri</th>
+						<th class="weekend">Sat</th>
+						<th class="weekend">Sun</th>
+					</tr>
+				</thead>
 				<tbody>
 					<tr>
-						<td><button class="btn btn-link btn-block">31</button></td>
-						<td><button class="btn btn-link btn-block">1</button></td>
-						<td><button class="btn btn-link btn-block">2</button></td>
-						<td><button class="btn btn-link btn-block">3</button></td>
-						<td><button class="btn btn-link btn-block">4</button></td>
-						<td><button class="btn btn-link btn-block">5</button></td>
-						<td><button class="btn btn-link btn-block">6</button></td>
+						<td><button class="btn-date prev">31</button></td>
+						<td><button class="btn-date">1</button></td>
+						<td><button class="btn-date">2</button></td>
+						<td><button class="btn-date">3</button></td>
+						<td><button class="btn-date">4</button></td>
+						<td><button class="btn-date">5</button></td>
+						<td><button class="btn-date">6</button></td>
 					</tr>
 					<tr>
-						<td><button class="btn btn-link btn-block">7</button></td>
-						<td><button class="btn btn-link btn-block">8</button></td>
-						<td><button class="btn btn-link btn-block">9</button></td>
-						<td><button class="btn btn-link btn-block">10</button></td>
-						<td><button class="btn btn-link btn-block">11</button></td>
-						<td><button class="btn btn-link btn-block">12</button></td>
-						<td><button class="btn btn-link btn-block">13</button></td>
+						<td><button class="btn-date">7</button></td>
+						<td><button class="btn-date">8</button></td>
+						<td><button class="btn-date">9</button></td>
+						<td><button class="btn-date">10</button></td>
+						<td><button class="btn-date">11</button></td>
+						<td><button class="btn-date">12</button></td>
+						<td><button class="btn-date">13</button></td>
 					</tr>
 					<tr>
-						<td><button class="btn btn-link btn-block">14</button></td>
-						<td><button class="btn btn-link btn-block">15</button></td>
-						<td><button class="btn btn-link btn-block">16</button></td>
-						<td><button class="btn btn-link btn-block">17</button></td>
-						<td><button class="btn btn-link btn-block">18</button></td>
-						<td><button class="btn btn-link btn-block">19</button></td>
-						<td><button class="btn btn-link btn-block">20</button></td>
+						<td><button class="btn-date">14</button></td>
+						<td><button class="btn-date today">15</button></td>
+						<td><button class="btn-date">16</button></td>
+						<td><button class="btn-date">17</button></td>
+						<td><button class="btn-date">18</button></td>
+						<td><button class="btn-date">19</button></td>
+						<td><button class="btn-date">20</button></td>
 					</tr>
 					<tr>
-						<td><button class="btn btn-link btn-block">21</button></td>
-						<td><button class="btn btn-link btn-block">22</button></td>
-						<td><button class="btn btn-link btn-block">23</button></td>
-						<td><button class="btn btn-link btn-block">24</button></td>
-						<td><button class="btn btn-link btn-block">25</button></td>
-						<td><button class="btn btn-link btn-block">26</button></td>
-						<td><button class="btn btn-link btn-block">27</button></td>
+						<td><button class="btn-date">21</button></td>
+						<td><button class="btn-date">22</button></td>
+						<td><button class="btn-date">23</button></td>
+						<td><button class="btn-date">24</button></td>
+						<td><button class="btn-date">25</button></td>
+						<td><button class="btn-date">26</button></td>
+						<td><button class="btn-date">27</button></td>
 					</tr>
 					<tr>
-						<td><button class="btn btn-link btn-block">28</button></td>
-						<td><button class="btn btn-link btn-block">29</button></td>
-						<td><button class="btn btn-link btn-block">30</button></td>
-						<td><button class="btn btn-link btn-block">1</button></td>
-						<td><button class="btn btn-link btn-block">2</button></td>
-						<td><button class="btn btn-link btn-block">3</button></td>
-						<td><button class="btn btn-link btn-block">4</button></td>
+						<td><button class="btn-date">28</button></td>
+						<td><button class="btn-date">29</button></td>
+						<td><button class="btn-date">30</button></td>
+						<td><button class="btn-date next">1</button></td>
+						<td><button class="btn-date next">2</button></td>
+						<td><button class="btn-date next">3</button></td>
+						<td><button class="btn-date next">4</button></td>
 					</tr>
 				</tbody>
+				<tfoot>
+					<tr>
+						<td colspan="7">
+							<div class="col-xs-6"><button class="btn-today">Today</button></div>
+							<div class="col-xs-6"><button class="btn-clear">Clear</button></div>
+						</td>
+					</tr>
+				</tfoot>
 			</table>
 		</div>
 	</div>-->
@@ -204,35 +153,7 @@
 	<script type="text/javascript" src="bootstrap-dtpicker.js"></script>
 	<script type="text/javascript">
 		$(function () {
-
-			//$("input.datebutton").on("change blur keyup click", function () {
-			//	var $container = $(this).parent().parent().find("input[type='text']");
-			//	if (!!this.valueAsDate)
-			//		$container.val(JSON.stringify(this.valueAsDate));
-			//	else if ($(this).val().length > 0)
-			//		$container.val(JSON.stringify($(this).val()));
-			//	else
-			//		$container.val("N/A");
-			//});
-
-			//$(".popover button").on("click", function () {
-			//	$("#events").prepend($("<li/>").text($(this).text()));
-			//});
-
-			//$("input.datebutton").parent().parent().find("input[type='text']").on("click", function () {
-			//	$(".datebutton").focus();
-			//});
-
-			$("#dtpicker1").dtpicker();
-			$("#dtpicker2").dtpicker();
-			$("#dtpicker3").dtpicker();
-			$("#dtpicker4").dtpicker();
-			$("#dtpicker5").dtpicker();
-			$("#dtpicker6").dtpicker();
-
-			//$("#dtpicker1, #dtpicker2, #dtpicker3, #dtpicker4").on("dateChanged", function (e, date) {
-			//	console.log(date);
-			//});
+			$("#dtpicker1, #dtpicker2, #dtpicker3, #dtpicker4, #dtpicker5, #dtpicker6").dtpicker();
 		});
 	</script>
 </body>
