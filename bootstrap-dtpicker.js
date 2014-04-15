@@ -599,12 +599,21 @@
 			}
 
 			function onDateInputChanged() {
-				selectedValue = this.valueAsDate ? moment.utc(this.valueAsDate).startOf("day").toDate() : null;
-
+				if (this.valueAsDate) {
+					var utc = moment.utc(this.valueAsDate);
+					selectedValue = moment([utc.year(), utc.month(), utc.date(), 0, 0, 0, 0]).toDate();
+				}
+				else
+					selectedValue = null;
+		
 				if (settings.updateText)
 					$datepickerInput.val(self.format(selectedValue));
 
 				self.notifyDateChanged($root, selectedValue);
+
+				function log(text) {
+					$("body").prepend($("<p></p>").text(JSON.stringify(text)));
+				}
 			}
 
 			function onTextInputClicked() {
