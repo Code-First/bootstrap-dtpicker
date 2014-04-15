@@ -618,11 +618,8 @@
 
 			function onTextInputClicked() {
 				$datepickerButton.blur();
-				$datepickerInput.focus();
-				setTimeout(function () {
-					$datepickerButton.focus();
-					$datepickerButton.click();
-				}, 10);
+				$datepickerButton.click();
+				$datepickerButton.focus();
 			}
 		}
 
