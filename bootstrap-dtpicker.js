@@ -621,6 +621,7 @@
 				$datepickerInput.focus();
 				setTimeout(function () {
 					$datepickerButton.focus();
+					$datepickerButton.click();
 				}, 10);
 			}
 		}
