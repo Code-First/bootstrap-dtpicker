@@ -31,21 +31,25 @@
 
 		<div class="row">
 			<div class="col-sm-4 control-container">
+				<p></p>
 				<div id="dtpicker1" class="dtpicker-lg">
 				</div>
 			</div>
 
 			<div class="col-sm-4 control-container">
+				<p></p>
 				<div id="dtpicker2">
 				</div>
 			</div>
 
 			<div class="col-sm-3 control-container">
+				<p></p>
 				<div id="dtpicker3" class="dtpicker-sm">
 				</div>
 			</div>
 
 			<div class="col-sm-1 control-container">
+				<p></p>
 				<div id="dtpicker4" class="dtpicker-sm">
 				</div>
 			</div>
@@ -57,9 +61,11 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-sm-11 control-container">
+				<p></p>
 				<div id="dtpicker5" class="dtpicker-sm"></div>
 			</div>	
 			<div class="col-sm-1 control-container">
+				<p></p>
 				<div id="dtpicker6" class="dtpicker-sm"></div>
 			</div>
 		</div>
@@ -154,6 +160,9 @@
 	<script type="text/javascript">
 		$(function () {
 			$("#dtpicker1, #dtpicker2, #dtpicker3, #dtpicker4, #dtpicker5, #dtpicker6").dtpicker();
+			$("#dtpicker1, #dtpicker2, #dtpicker3, #dtpicker4, #dtpicker5, #dtpicker6").on("dateChanged", function (e, data) {
+				$(this).prev("p").text(JSON.stringify(data));
+			});
 		});
 	</script>
 </body>

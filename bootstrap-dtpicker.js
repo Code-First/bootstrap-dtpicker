@@ -43,7 +43,8 @@
 				if (m && m.isValid())
 					value = m.startOf("day").toDate();
 
-				$root.trigger("dateChanged", [value]);
+				$root.trigger("dateChanged", [date]);
+				//$root.trigger("dateChanged", [value]);
 			}
 
 			self.format = function (date) {
