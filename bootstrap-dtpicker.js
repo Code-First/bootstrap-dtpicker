@@ -1,9 +1,12 @@
 // Bootstrap Datepicker v.1.0
+// https://github.com/sergun/bootstrap-dtpicker
+//
 // - methods
 //     - getDate
 //     - setDate(date)
 // - events:
 //     - dateChanged (on date changed)
+
 (function (factory) {
 
 	if (typeof define === "function" && define.amd)
