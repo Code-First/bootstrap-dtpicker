@@ -1,14 +1,17 @@
-//
+// Bootstrap Datepicker v.1.0
+// - methods
+//     - getDate
+//     - setDate(date)
 // - events:
-//   dateChanged
+//     - dateChanged (on date changed)
 (function (factory) {
 
 	if (typeof define === "function" && define.amd)
-		define(["jquery"], factory);
+		define(["jquery", "moment"], factory);
 	else
-		factory(jQuery);
+		factory(jQuery, moment);
 
-}(function ($) {
+}(function ($, moment) {
 	"use strict";
 
 	// Checking dependencies
@@ -49,8 +52,7 @@
 			self.format = function (date) {
 				if (!date)
 					return settings.emptyText;
-				else
-				{
+				else {
 					var m = moment(date);
 					if (m.isValid())
 						return m.format(settings.format);
@@ -66,7 +68,7 @@
 			var self = this;
 
 			var $root = element;
-			
+
 			var $datepickerInput, $datepickerButton;
 
 			var viewValue = moment().toDate();
@@ -79,7 +81,7 @@
 
 			var popover = (function () {
 
-				var popoverContext = { };
+				var popoverContext = {};
 				var $popoverElement = null;
 
 				var layout = {
@@ -89,26 +91,31 @@
 					_daysCalendarTitle: null,
 
 					invalidate: function () {
+						this.invalidateTextbox();
 						this.invalidateTitle();
 						this.invalidateContent();
 					},
 
 					invalidateTitle: function () {
-						this._daysCalendarTitle.text(moment(viewValue).format($settings.daysTitleFormat));
+						if (this._daysCalendarTitle)
+							this._daysCalendarTitle.text(viewValue ? moment(viewValue).format($settings.daysTitleFormat) : "");
 					},
 
 					invalidateContent: function () {
-						this._daysCalendarBody
-							.empty()
-							.append(this.buildDaysTableContent(viewValue, $settings.startDay, $settings.displayToday));
+						if (this._daysCalendarBody)
+							this._daysCalendarBody
+								.empty()
+								.append(this.buildDaysTableContent(viewValue, $settings.startDay, $settings.displayToday));
+					},
+
+					invalidateTextbox: function() {
+						if ($settings.updateText)
+							$datepickerInput.val(self.format(selectedValue));
 					},
 
 					changeDate: function (value) {
 						viewValue = value ? value : moment().startOf("day").toDate();
 						selectedValue = value;
-
-						if ($settings.updateText)
-							$datepickerInput.val(self.format(selectedValue));
 
 						this.invalidate();
 
@@ -117,7 +124,7 @@
 
 					buildPopover: function () {
 						var $result = $("<div class=\"popover in hide dtpicker-popover\" style=\"display: none;\"><div class=\"arrow\"></div></div>");
-						
+
 						$result.append(this.buildPopoverTitle());
 						$result.append(this.buildPopoverContent());
 
@@ -165,9 +172,9 @@
 
 						$result.append(buildHeader($settings.startDay));
 
-						$result.append(this._daysCalendarBody = $("<tbody></tbody>").append(this.buildDaysTableContent(viewValue, $settings.startDay, $settings.displayToday)));
+						$result.append(this._daysCalendarBody = $("<tbody></tbody>").append(this.buildDaysTableContent(viewValue, $settings.startDay, $settings.displayToday, $settings.closeOnSelect)));
 
-						var footer = buildFooter.call(this, $settings.todayButtonVisible, $settings.clearButtonVisible);
+						var footer = buildFooter.call(this, $settings.todayButtonVisible, $settings.clearButtonVisible, $settings.closeOnSelect);
 						if (footer)
 							$result.append(footer);
 
@@ -193,7 +200,7 @@
 							return result;
 						}
 
-						function buildFooter(todayButtonVisible, clearButtonVisible) {
+						function buildFooter(todayButtonVisible, clearButtonVisible, closeOnSelect) {
 							var btnToday = null,
 								btnClear = null;
 
@@ -201,6 +208,9 @@
 								btnToday = $("<button class=\"btn-today\">Today</button>");
 								btnToday.on("click", $.proxy(function () {
 									this.changeDate(moment().startOf("day").toDate());
+
+									if (closeOnSelect)
+										popoverContext.hide();
 								}, this));
 							}
 
@@ -208,6 +218,9 @@
 								btnClear = $("<button class=\"btn-clear\">Clear</button>");
 								btnClear.on("click", $.proxy(function () {
 									this.changeDate(null);
+
+									if (closeOnSelect)
+										popoverContext.hide();
 								}, this));
 							}
 
@@ -233,7 +246,7 @@
 						}
 					},
 
-					buildDaysTableContent: function (date, startDay, displayToday) {
+					buildDaysTableContent: function (date, startDay, displayToday, closeOnSelect) {
 						if (startDay > 6)
 							throw "Start day can't be more than 6.";
 
@@ -245,7 +258,6 @@
 						var selectedDate = moment(selectedValue);
 						var currentDate = moment(date);
 						var currentMonth = currentDate.month();
-						var daysInMonth = currentDate.daysInMonth();
 						var weeksCount = Math.ceil((moment(date).endOf("month").diff(day, "days") + 1) / 7);
 
 						var weeks = [];
@@ -275,7 +287,12 @@
 
 								dayButton.on("click", { layout: this }, function (e) {
 									var m = moment($(this).attr("data-dtvalue"));
+
 									e.data.layout.changeDate(m.isValid() ? m.toDate() : null);
+									e.data.layout.invalidate();
+
+									if (closeOnSelect)
+										popoverContext.hide();
 								});
 
 								days.push($("<td></td>").append(dayButton));
@@ -288,6 +305,10 @@
 						return weeks;
 					}
 
+				};
+
+				popoverContext.invalidate = function () {
+					layout.invalidate();
 				};
 
 				popoverContext.build = function () {
@@ -401,8 +422,7 @@
 						case "bottom":
 							result.top = inputTop + inputHeight + 1;
 
-							if ((inputLeft + popoverWidth + popoverPadding) > windowWidth)
-							{
+							if ((inputLeft + popoverWidth + popoverPadding) > windowWidth) {
 								result.left = windowWidth - (popoverWidth + popoverPadding);
 
 								if (result.left < popoverPadding)
@@ -488,6 +508,19 @@
 
 			})();
 
+			self.getDate = function () {
+				return selectedValue;
+			};
+
+			self.setDate = function (value) {
+				selectedValue = value;
+				viewValue = value;
+
+				popover.invalidate();
+
+				return selectedValue;
+			};
+
 			init();
 
 			return self;
@@ -554,12 +587,25 @@
 
 			var selectedValue = null;
 
+			self.getDate = function () {
+				return selectedValue;
+			};
+
+			self.setDate = function (value) {
+				selectedValue = value;
+
+				invalidateTextbox();
+				invalidatePicker();
+
+				return selectedValue;
+			};
+
 			init();
 
 			return self;
 
 			// Private methods
-
+			
 			function init() {
 				initLayout();
 				initEvents();
@@ -598,6 +644,20 @@
 				$datepickerInput.off("click", $.proxy(onTextInputClicked, self));
 			}
 
+			function invalidateTextbox() {
+				if ($settings.updateText)
+					$datepickerInput.val(self.format(selectedValue));
+			};
+
+			function invalidatePicker() {
+				var m = moment(selectedValue);
+
+				if (m && m.isValid())
+					$datepickerButton.val(m.format("YYYY-MM-DD"));
+				else
+					$datepickerButton.val("");
+			}
+
 			function onDateInputChanged() {
 				if (this.valueAsDate) {
 					var utc = moment.utc(this.valueAsDate);
@@ -605,9 +665,8 @@
 				}
 				else
 					selectedValue = null;
-		
-				if (settings.updateText)
-					$datepickerInput.val(self.format(selectedValue));
+
+				invalidateTextbox();
 
 				self.notifyDateChanged($root, selectedValue);
 			}
@@ -661,9 +720,15 @@
 
 		// Apply control to each jQuery element
 		var params = arguments;
-		return this.each(function () {
+
+		var results = [];
+		var plainResult = undefined;
+
+		this.each(function () {
+			var result = undefined;
 
 			var control = $(this).data(dataElementName);
+			var method = param;
 
 			if (control == undefined) {
 				if (capabilitiesChecker.validateBrowser() && capabilitiesChecker.validateTouch() && capabilitiesChecker.validateInputType("date"))
@@ -672,15 +737,23 @@
 					control = new DatepickerPopover($(this), settings);
 
 				$(this).data(dataElementName, control);
-				return control;
+				result = this;
 			}
-			else if ((control[method] != undefined) && (typeof control[method] == "function"))
-				return control[method].apply(control, Array.prototype.slice.call(params, 1)) || $(this);
+			else if ((control[method] != undefined) && (typeof control[method] == "function")) {
+				var methodResult = control[method].apply(control, Array.prototype.slice.call(params, 1));
+
+				result = this;
+
+				if (results.length == 0)
+					plainResult = methodResult;
+			}
 			else if (method != undefined)
-				return $.error("There is no method with " + method + ' name.');
-			else
-				return undefined;
+				result = $.error("There is no method with " + method + ' name.');
+
+			results.push(result);
 		});
+
+		return plainResult !== undefined ? plainResult : $(results);
 	};
 
 	// Datepicker plugin defaults
@@ -698,7 +771,8 @@
 		todayButtonVisible: true,
 		clearButtonVisible: true,
 		daysTitleFormat: "MMMM YYYY",
-		displayToday: true
+		displayToday: true,
+		closeOnSelect: true
 	};
 
 	// Memoization API
