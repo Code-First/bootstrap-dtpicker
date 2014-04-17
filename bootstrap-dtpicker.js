@@ -111,18 +111,21 @@
 								.append(this.buildDaysTableContent(viewValue, $settings.startDay, $settings.displayToday));
 					},
 
-					invalidateTextbox: function() {
+					invalidateTextbox: function () {
 						if ($settings.updateText)
 							$datepickerInput.val(self.format(selectedValue));
 					},
 
-					changeDate: function (value) {
-						viewValue = value ? value : moment().startOf("day").toDate();
-						selectedValue = value;
+					changeDate: function (value, avoidEventGenerating) {
+						if (value != selectedValue) {
+							viewValue = value ? value : moment().startOf("day").toDate();
+							selectedValue = value;
 
-						this.invalidate();
+							this.invalidate();
 
-						self.notifyDateChanged($root, selectedValue);
+							if (!avoidEventGenerating)
+								self.notifyDateChanged($root, selectedValue);
+						}
 					},
 
 					buildPopover: function () {
@@ -288,7 +291,7 @@
 								if (selectedDate && selectedDate.isSame(day, "day"))
 									dayButton.addClass("selected");
 
-								dayButton.on("click", { layout: this }, function(e) {
+								dayButton.on("click", { layout: this }, function (e) {
 									if (closeOnSelect)
 										popoverContext.hide();
 
@@ -312,6 +315,10 @@
 
 				popoverContext.invalidate = function () {
 					layout.invalidate();
+				};
+
+				popoverContext.changeDate = function (value, avoidEventGenerating) {
+					layout.changeDate(value, avoidEventGenerating);
 				};
 
 				popoverContext.build = function () {
@@ -472,8 +479,6 @@
 
 							result.left = inputLeft + inputWidth + buttonWidth + 1;
 
-							console.log((result.left + popoverWidth + popoverPadding) > windowWidth);
-
 							if ((result.left + popoverWidth + popoverPadding) > windowWidth)
 								result.left = windowWidth - popoverWidth - popoverPadding;
 
@@ -513,12 +518,8 @@
 				return selectedValue;
 			};
 
-			self.setDate = function (value) {
-				selectedValue = value;
-				viewValue = value;
-
-				popover.invalidate();
-
+			self.setDate = function (value, avoidEventGenerating) {
+				popover.changeDate(value, avoidEventGenerating);
 				return selectedValue;
 			};
 
@@ -606,7 +607,7 @@
 			return self;
 
 			// Private methods
-			
+
 			function init() {
 				initLayout();
 				initEvents();
