@@ -101,14 +101,14 @@
 
 					invalidateTitle: function () {
 						if (this._daysCalendarTitle)
-							this._daysCalendarTitle.text(viewValue ? moment(viewValue).format($settings.daysTitleFormat) : "");
+							this._daysCalendarTitle.html(viewValue ? moment(viewValue).format($settings.daysTitleFormat) : "");
 					},
 
 					invalidateContent: function () {
 						if (this._daysCalendarBody)
 							this._daysCalendarBody
 								.empty()
-								.append(this.buildDaysTableContent(viewValue, $settings.startDay, $settings.displayToday));
+								.append(this.buildDaysTableContent(viewValue, $settings.startDay, $settings.displayToday, $settings.closeOnSelect));
 					},
 
 					invalidateTextbox: function () {
@@ -142,23 +142,37 @@
 
 						var toolbar = $("<div class=\"toolbar\"></div>");
 
-						var btnPrev = $("<button class=\"btn-prev\">&laquo;</button>");
+						var btnPrevYear = $("<button class=\"btn-prev btn-left\">&#8666;</button>");
+						var btnPrevMonth = $("<button class=\"btn-prev\">&laquo;</button>");
 						var btnMode = this._daysCalendarTitle = $("<button class=\"btn-mode\">" + moment(viewValue).format($settings.daysTitleFormat) + "</button>");
-						var btnNext = $("<button class=\"btn-next\">&raquo;</button>");
+						var btnNextMonth = $("<button class=\"btn-next\">&raquo;</button>");
+						var btnNextYear = $("<button class=\"btn-prev btn-right\">&#8667;</button>");
 
-						toolbar.append($("<div class=\"col-xs-2\"></div>").append(btnPrev));
-						toolbar.append($("<div class=\"col-xs-8\"></div>").append(btnMode));
-						toolbar.append($("<div class=\"col-xs-2\"></div>").append(btnNext));
+						toolbar.append($("<div class=\"col-xs-2\"></div>").append(btnPrevYear));
+						toolbar.append($("<div class=\"col-xs-2\"></div>").append(btnPrevMonth));
+						toolbar.append($("<div class=\"col-xs-4\"></div>").append(btnMode));
+						toolbar.append($("<div class=\"col-xs-2\"></div>").append(btnNextMonth));
+						toolbar.append($("<div class=\"col-xs-2\"></div>").append(btnNextYear));
 
 						$result.append(toolbar);
 
-						btnPrev.on("click", $.proxy(function () {
+						btnPrevYear.on("click", $.proxy(function () {
+							viewValue = moment(viewValue).add("y", -1).toDate();
+							this.invalidate();
+						}, this));
+
+						btnPrevMonth.on("click", $.proxy(function () {
 							viewValue = moment(viewValue).add("M", -1).toDate();
 							this.invalidate();
 						}, this));
 
-						btnNext.on("click", $.proxy(function () {
+						btnNextMonth.on("click", $.proxy(function () {
 							viewValue = moment(viewValue).add("M", 1).toDate();
+							this.invalidate();
+						}, this));
+
+						btnNextYear.on("click", $.proxy(function () {
+							viewValue = moment(viewValue).add("y", 1).toDate();
 							this.invalidate();
 						}, this));
 
@@ -772,7 +786,7 @@
 		startDay: 1,
 		todayButtonVisible: true,
 		clearButtonVisible: true,
-		daysTitleFormat: "MMMM YYYY",
+		daysTitleFormat: "MMMM<br/> YYYY",
 		displayToday: true,
 		closeOnSelect: true
 	};

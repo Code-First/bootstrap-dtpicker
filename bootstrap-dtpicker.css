@@ -71,7 +71,7 @@
 	.dtpicker-popover > .popover-title
 	{
 		padding: 0;
-		height: 26px;
+		height: 42px;
 		overflow: hidden;
 	}
 
@@ -88,19 +88,19 @@
 			.dtpicker-popover > .popover-title > .toolbar > div > button.btn-next
 			{
 				margin: 0;
-				padding: 3px 1px;
+				padding: 12px 1px;
 				width: 100%;
 				display: block;
 				border: none;
 				background: transparent;
 			}
 
-			.dtpicker-popover > .popover-title > .toolbar > div > button.btn-prev
+			.dtpicker-popover > .popover-title > .toolbar > div > button.btn-left
 			{
 				border-radius: 6px 0 0 0;
 			}
 
-			.dtpicker-popover > .popover-title > .toolbar > div > button.btn-next
+			.dtpicker-popover > .popover-title > .toolbar > div > button.btn-right
 			{
 				border-radius: 0 6px 0 0;
 			}
