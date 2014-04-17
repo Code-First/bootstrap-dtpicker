@@ -210,20 +210,20 @@
 							if (todayButtonVisible) {
 								btnToday = $("<button class=\"btn-today\">Today</button>");
 								btnToday.on("click", $.proxy(function () {
-									this.changeDate(moment().startOf("day").toDate());
-
 									if (closeOnSelect)
 										popoverContext.hide();
+
+									this.changeDate(moment().startOf("day").toDate());
 								}, this));
 							}
 
 							if (clearButtonVisible) {
 								btnClear = $("<button class=\"btn-clear\">Clear</button>");
 								btnClear.on("click", $.proxy(function () {
-									this.changeDate(null);
-
 									if (closeOnSelect)
 										popoverContext.hide();
+
+									this.changeDate(null);
 								}, this));
 							}
 
@@ -288,14 +288,14 @@
 								if (selectedDate && selectedDate.isSame(day, "day"))
 									dayButton.addClass("selected");
 
-								dayButton.on("click", { layout: this }, function (e) {
+								dayButton.on("click", { layout: this }, function(e) {
+									if (closeOnSelect)
+										popoverContext.hide();
+
 									var m = moment($(this).attr("data-dtvalue"));
 
 									e.data.layout.changeDate(m.isValid() ? m.toDate() : null);
 									e.data.layout.invalidate();
-
-									if (closeOnSelect)
-										popoverContext.hide();
 								});
 
 								days.push($("<td></td>").append(dayButton));
@@ -349,8 +349,6 @@
 				popoverContext.show = function (avoidInputFocus) {
 					if (!$popoverElement)
 						popoverContext.build();
-
-					var inputElement = $datepickerInput;
 
 					$popoverElement.removeClass("hide").show();
 					popoverContext.place();
