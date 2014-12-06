@@ -10,6 +10,7 @@
     "bootstrap",
     "datepicker"
   ],
+  "main": ["dist/bootstrap-dtpicker.min.css", "dist/bootstrap-dtpicker.min.js"],
   "license": "MIT",
   "ignore": [
     "**/.*",
