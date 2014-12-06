@@ -1,0 +1,13 @@
+{
+  "name": "Datepicker for Boostrap",
+  "version": "1.0.0",
+  "description": "Bootstrap based datepicker control",
+  "keywords": [
+    "bootstrap",
+    "datepicker"
+  ],
+  "author": "CodeFirst",
+  "license": "MIT",
+  "devDependencies": {
+  }
+}

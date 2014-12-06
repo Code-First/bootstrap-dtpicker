@@ -1,0 +1,21 @@
+{
+  "name": "Datepicker for Boostrap",
+  "version": "1.0.0",
+  "homepage": "https://github.com/Code-First/bootstrap-dtpicker",
+  "authors": [
+    "CodeFirst"
+  ],
+  "description": "Bootstrap based datepicker control",
+  "keywords": [
+    "bootstrap",
+    "datepicker"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
