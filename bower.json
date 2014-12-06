@@ -1,5 +1,5 @@
 {
-  "name": "Datepicker for Boostrap",
+  "name": "boostrap-dtpicker",
   "version": "1.0.0",
   "homepage": "https://github.com/Code-First/bootstrap-dtpicker",
   "authors": [
@@ -17,5 +17,9 @@
     "bower_components",
     "test",
     "tests"
-  ]
+  ],
+  "dependencies": {
+    "bootstrap": "~3.3.1",
+    "moment": "~2.8.4"
+  }
 }
